@@ -10,9 +10,7 @@ function clearCalculator() {
 function processOperations() {
   let calculated = 0;
   let currentOperation = '';
-  console.log(operationArray);
   for (let i = 0; i < operationArray.length; i++) {
-    console.log(operationArray[i]);
     if (i % 2 != 0) {
       currentOperation = operationArray[i];
     } else {
@@ -36,7 +34,6 @@ function processOperations() {
       }
     }
   }
-  console.log(calculated);
   operationArray = [];
   display.textContent = calculated;
 }
@@ -51,7 +48,6 @@ function processNumberInput(number) {
 }
 
 function processOperationInput(operation) {
-  console.log(operation)
   if (operation == 'clear') return clearCalculator();
   if (operation == 'equal') {
     operationArray.push(parseInt(display.textContent));
