@@ -42,7 +42,7 @@ function processOperations() {
 }
 
 function processNumberInput(number) {
-  if (display.textContent.length >= 15) return;
+  if (display.textContent.length >= 23) return;
   if (display.textContent == 0) {
     display.textContent = number.toString();
   } else {
