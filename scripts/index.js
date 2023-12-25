@@ -28,7 +28,7 @@ function processOperations() {
             break;
           case 'divide':
             calculated /= operationArray[i];
-            if (calculated = 'Infinity') {
+            if (calculated == 'Infinity') {
               mathError = true;
             }
             break;
