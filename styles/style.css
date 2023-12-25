@@ -54,7 +54,20 @@ body {
   border-radius: 4px;
 }
 
+.normal-button:hover {
+  background-color: #ccc !important;
+}
+
 .special-button {
   background-color: orange;
   border: 1px solid buttonborder;
+}
+
+.special-button:hover {
+  background-color: rgb(235, 129, 0) !important;
+}
+
+.special-button:hover,
+.normal-button:hover {
+  cursor: pointer !important;
 }
