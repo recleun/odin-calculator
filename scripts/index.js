@@ -1,4 +1,5 @@
 let primaryDisplay = document.querySelector('.display .primary');
+let secondaryDisplay = document.querySelector('.display .secondary');
 
 let operationArray = [];
 
