@@ -10,6 +10,7 @@ function clearCalculator() {
 function processOperations() {
   let calculated = 0;
   let currentOperation = '';
+  let mathError = false;
   for (let i = 0; i < operationArray.length; i++) {
     if (i % 2 != 0) {
       currentOperation = operationArray[i];
@@ -27,6 +28,9 @@ function processOperations() {
             break;
           case 'divide':
             calculated /= operationArray[i];
+            if (calculated = 'Infinity') {
+              mathError = true;
+            }
             break;
         }
       } else {
@@ -35,12 +39,12 @@ function processOperations() {
     }
   }
   operationArray = [];
-  display.textContent = calculated;
+  display.textContent = mathError ? 'Math Error' : calculated;
 }
 
 function processNumberInput(number) {
   if (display.textContent.length >= 23) return;
-  if (display.textContent == 0) {
+  if (display.textContent == 0 || display.textContent == 'Math Error') {
     display.textContent = number.toString();
   } else {
     display.textContent += number.toString();
