@@ -1,10 +1,10 @@
-let display = document.querySelector('.display');
+let primaryDisplay = document.querySelector('.display .primary');
 
 let operationArray = [];
 
 function clearCalculator() {
   operationArray = [];
-  display.textContent = 0;
+  primaryDisplay.textContent = 0;
 }
 
 function processOperations() {
@@ -39,27 +39,27 @@ function processOperations() {
     }
   }
   operationArray = [];
-  display.textContent = mathError ? 'Math Error' : calculated;
+  primaryDisplay.textContent = mathError ? 'Math Error' : calculated;
 }
 
 function processNumberInput(number) {
-  if (display.textContent.length >= 23) return;
-  if (display.textContent == 0 || display.textContent == 'Math Error') {
-    display.textContent = number.toString();
+  if (primaryDisplay.textContent.length >= 23) return;
+  if (primaryDisplay.textContent == 0 || primaryDisplay.textContent == 'Math Error') {
+    primaryDisplay.textContent = number.toString();
   } else {
-    display.textContent += number.toString();
+    primaryDisplay.textContent += number.toString();
   }
 }
 
 function processOperationInput(operation) {
   if (operation == 'clear') return clearCalculator();
   if (operation == 'equal') {
-    operationArray.push(parseInt(display.textContent));
+    operationArray.push(parseInt(primaryDisplay.textContent));
     return processOperations();
   };
-  operationArray.push(parseInt(display.textContent));
+  operationArray.push(parseInt(primaryDisplay.textContent));
   operationArray.push(operation);
-  display.textContent = 0;
+  primaryDisplay.textContent = 0;
 }
 
 const operations = document.querySelectorAll('.special-button');
