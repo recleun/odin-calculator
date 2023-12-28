@@ -31,6 +31,10 @@ body {
   cursor: default;
 }
 
+.display .primary {
+  height: 25px;
+}
+
 .display .secondary {
   font-size: 14px;
   color: darkgray;
