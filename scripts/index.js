@@ -99,11 +99,6 @@ function processNumberInput(number) {
 }
 
 function processOperationInput(operation) {
-  // previousOperation = currentOperation;
-  // currentOperation = operation;
-  // if (operation == 'clear') return clearCalculator();
-  // if (operation == 'equal') return processEqual();
-  // processOperations(resetOperations, operation);
   if (operation != 'equal') {
     currentOperation = operation;
   } else {
