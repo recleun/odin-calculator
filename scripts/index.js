@@ -44,6 +44,10 @@ function clearCalculator() {
   firstInput = true;
 }
 
+/*
+  Makes a calculation according to given parameter
+  Handles some specific cases so it behaves like simple calculators
+*/
 function processOperations(operation) {
   clearOnNextInput = true;
   let mathError = false;
