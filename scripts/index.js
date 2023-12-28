@@ -1,66 +1,118 @@
 let primaryDisplay = document.querySelector('.display .primary');
 let secondaryDisplay = document.querySelector('.display .secondary');
 
-let operationArray = [];
+let firstInput = true;
+let clearOnNextInput = false;
+let currentOperation = '';
+let previousOperation = '';
 
-function clearCalculator() {
-  operationArray = [];
-  primaryDisplay.textContent = 0;
+function getPrimaryInput() {
+  return parseInt(primaryDisplay.textContent || 0);
 }
 
-function processOperations() {
-  let calculated = 0;
-  let currentOperation = '';
-  let mathError = false;
-  for (let i = 0; i < operationArray.length; i++) {
-    if (i % 2 != 0) {
-      currentOperation = operationArray[i];
-    } else {
-      if (currentOperation) {
-        switch (currentOperation) {
-          case 'plus':
-            calculated = calculated + operationArray[i];
-            break;
-          case 'minus':
-            calculated -= operationArray[i];
-            break;
-          case 'multiply':
-            calculated *= operationArray[i];
-            break;
-          case 'divide':
-            calculated /= operationArray[i];
-            if (calculated == 'Infinity') {
-              mathError = true;
-            }
-            break;
-        }
-      } else {
-        calculated = operationArray[i];
-      }
-    }
+function getSecondaryInput() {
+  return parseInt(secondaryDisplay.textContent
+    .slice(0, secondaryDisplay.textContent.length-2));
+}
+
+function setPrimaryInput(input) {
+  primaryDisplay.textContent = input;
+}
+
+function setSecondaryInput(input) {
+  secondaryDisplay.textContent = `${input} ${formatOperation(currentOperation)}`;
+}
+
+function formatOperation(operation) {
+  switch (operation) {
+    case 'plus':
+      return '+';
+    case 'minus':
+      return '-';
+    case 'multiply':
+      return '×';
+    case 'divide':
+      return '÷';
   }
-  operationArray = [];
-  primaryDisplay.textContent = mathError ? 'Math Error' : calculated;
+}
+
+function clearCalculator() {
+  primaryDisplay.textContent = '';
+  secondaryDisplay.textContent = 0;
+  currentOperation = '';
+  previousOperation = '';
+  firstInput = true;
+}
+
+function processOperations(operation) {
+  clearOnNextInput = true;
+  let mathError = false;
+  let calculated = getSecondaryInput() || 0;
+  let toProcess = getPrimaryInput();
+  if (firstInput) {
+    if (operation == 'equal') {
+      secondaryDisplay.textContent = getPrimaryInput();
+      return;
+    } else {
+      setSecondaryInput(getPrimaryInput());
+    }
+    firstInput = false;
+    clearOnNextInput = true;
+    return;
+  }
+  switch (currentOperation) {
+    case 'plus':
+      calculated += toProcess;
+      break;
+    case 'minus':
+      calculated -= toProcess;
+      break;
+    case 'multiply':
+      calculated *= toProcess;
+      break;
+    case 'divide':
+      calculated /= toProcess;
+      break;
+  }
+  if (calculated == 'Infinity') {
+    mathError = true;
+  }
+  setSecondaryInput(calculated);
+  if (mathError) {
+    clearCalculator();
+    setPrimaryInput('Math Error');
+  }
+  clearOnNextInput = true;
 }
 
 function processNumberInput(number) {
   if (primaryDisplay.textContent.length >= 23) return;
-  if (primaryDisplay.textContent == 0 || primaryDisplay.textContent == 'Math Error') {
-    primaryDisplay.textContent = number.toString();
-  } else {
-    primaryDisplay.textContent += number.toString();
+  if (clearOnNextInput) {
+    primaryDisplay.textContent = '';
+    clearOnNextInput = false;
   }
+  primaryDisplay.textContent += number.toString();
 }
 
 function processOperationInput(operation) {
+  // previousOperation = currentOperation;
+  // currentOperation = operation;
+  // if (operation == 'clear') return clearCalculator();
+  // if (operation == 'equal') return processEqual();
+  // processOperations(resetOperations, operation);
+  if (operation != 'equal') {
+    currentOperation = operation;
+  } else {
+    currentOperation = previousOperation;
+  }
   if (operation == 'clear') return clearCalculator();
-  if (operation == 'equal') {
-    operationArray.push(parseInt(primaryDisplay.textContent));
-    return processOperations();
-  };
-  operationArray.push(parseInt(primaryDisplay.textContent));
-  operationArray.push(operation);
-  primaryDisplay.textContent = 0;
+  console.log('current:', currentOperation);
+  console.log('previous:', previousOperation);
+  processOperations(operation);
+  previousOperation = currentOperation;
+  currentOperation = '';
+  console.log('current:', currentOperation);
+  console.log('previous:', previousOperation);
 }
 
 const operations = document.querySelectorAll('.special-button');
