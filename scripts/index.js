@@ -105,13 +105,9 @@ function processOperationInput(operation) {
     currentOperation = previousOperation;
   }
   if (operation == 'clear') return clearCalculator();
-  console.log('current:', currentOperation);
-  console.log('previous:', previousOperation);
   processOperations(operation);
   previousOperation = currentOperation;
   currentOperation = '';
-  console.log('current:', currentOperation);
-  console.log('previous:', previousOperation);
 }
 
 const operations = document.querySelectorAll('.special-button');
