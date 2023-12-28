@@ -60,6 +60,10 @@ function processOperations(operation) {
     clearOnNextInput = true;
     return;
   }
+  if (currentOperation != previousOperation) {
+    setSecondaryInput(getSecondaryInput());
+    return;
+  }
   switch (currentOperation) {
     case 'plus':
       calculated += toProcess;
